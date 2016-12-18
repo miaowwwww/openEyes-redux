@@ -1,11 +1,11 @@
 import React from 'react';
-import { observer } from 'mobx-react';
-
-
+import defaultImg from '../../../images/default.png';
+import UserImg from '../../../images/user.jpg';
 class PageMy extends React.Component {
 
 	constructor(props, context) {
 		super(props, context);
+		this.state = {};
 	}
 
 	componentDidMount() {
@@ -30,13 +30,11 @@ class PageMy extends React.Component {
 	}
 
 	render() {
-		let { photoId, name } = this.store.user;
-		console.log(this.store)
 		return (
 			<div className="PageMy">
 				<header>
 					<i className="icon" >☺</i>
-					<img src={img( photoId || 'default.png')} onClick={this.handleImg} />
+					<img src={ this.state.photoId && userImg || defaultImg } onClick={this.handleImg} />
 					<p>{ name || '点击登陆后可评论'}</p>
 					<ul>
 						<li onClick={this.handleCollection}><i>♥</i>我的收藏</li>
@@ -53,9 +51,5 @@ class PageMy extends React.Component {
 		)
 	}
 };
-
-function img(name) {
-	return `./images/${name}`
-}
 
 module.exports = PageMy;

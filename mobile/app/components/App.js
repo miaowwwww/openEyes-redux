@@ -5,7 +5,6 @@ import GlobalNav from "./GlobalNav";
 import Login from "./Login";
 
 
-@observer
 export default class App extends React.Component {
 
 	constructor(props) {
@@ -30,7 +29,7 @@ export default class App extends React.Component {
 					transitionName="animateBottomUp"
 					transitionEnterTimeout={200}
 					transitionLeaveTimeout={200} >
-					{ showLogin && <Login />}
+					<Login />
 				</ReactCSSTransitionGroup>
 			</div>
 		)

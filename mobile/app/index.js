@@ -4,15 +4,12 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 
 import './css/index.less';	
 
-
 import  App  from './components/App';
 
 const rootRoute = {
-	path: "/",
-	indexRoute: { onEnter: (nextState, replace) => replace('/app')},
 	childRoutes: [
 			{
-			path: 'app',
+			path: '/',
 			component: App,
 			indexRoute: { onEnter: (nextState, replace) => replace('/my') },
 			childRoutes: [
@@ -31,6 +28,7 @@ const rootRoute = {
 reactDOM.render(
 	<Router history={hashHistory} routes={rootRoute} />,
 	document.getElementById('root')
+	// document.body
 )
 
 

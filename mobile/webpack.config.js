@@ -1,31 +1,52 @@
 var webpack = require('webpack');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
-  plugins:[
-    new webpack.HotModuleReplacementPlugin({
-    })
-
-  ],
-  entry:['webpack/hot/dev-server', path.resolve(__dirname, './app/index.js')],
+  // entry:[
+  //   'webpack/hot/dev-server', 
+  //   'webpack-dev-server/client?http://localhost:9999',
+  //   path.resolve(__dirname, './app/index.js'),
+  //   path.resolve(__dirname, './app/third/flexible.js')
+  // ],
+  entry: {
+    main : './app/index.js',
+    flexible: './app/third/flexible.js'
+  },
   output:{
-    path:path.resolve(__dirname,'./build'),
-    filename:'index.js'
+    path:path.resolve(__dirname,'./dist'),
+    filename:'[name].js'
   },
   module:{
     loaders:[
-      {test:/\.js$/,loader:'jsx-loader'},
       {
         test: /\.js$/,
         exclude: /node_modules/,
         loader: "babel-loader",
         query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['transform-decorators-legacy']
+          presets: ['react', 'es2015', 'stage-0']
         }
       }, 
       {test: /\.(png|jpg)$/, loader: 'url?limit=40000'},
-      {test:/\.less$/,loader:'style!css!less'},
-      {test:/\.css$/,loader:'style!css'}
+      {test:/\.less$/,loader:'style!css!less'}
+      // { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader",'css?sourceMap') }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      // filename: 'index.html',
+      template: './dist/index.html',
+      favicon: './dist/favicon.ico'
+    }),
+    new OpenBrowserPlugin({ url: 'http://localhost:9999' }),
+    // new ExtractTextPlugin("styles.css"), //没有成功？难道因为我用的是less
+    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */'flexible', /* filename= */'flexible.js')
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   }
+    // })
+  ]
+
 }
