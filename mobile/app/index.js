@@ -1,10 +1,27 @@
 import React from 'react';
-import reactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
 import { Router, Route, hashHistory, IndexRoute } from 'react-router';
+import 'babel-polyfill';
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger';
 
 import './css/index.less';	
 
 import  App  from './components/App';
+
+import reducers from './reducers/index';
+
+const loggerMiddlewart = createLogger();
+
+const store = createStore(
+	reducers,
+	applyMiddleware(
+		thunkMiddleware,
+		loggerMiddlewart
+	)
+);
 
 const rootRoute = {
 	childRoutes: [
@@ -25,10 +42,12 @@ const rootRoute = {
 		}
 	]
 }
-reactDOM.render(
-	<Router history={hashHistory} routes={rootRoute} />,
+
+ReactDOM.render(
+	<Provider store={store} >
+		<Router history={hashHistory} routes={rootRoute} />
+	</Provider>,
 	document.getElementById('root')
-	// document.body
 )
 
 

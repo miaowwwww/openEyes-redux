@@ -16,21 +16,24 @@ export default class Login extends Component {
 		if( !user.account || !user.password ){
 			return ;
 		}
-
+		this.props.login(user);
+		// this.props.closeView();
 		console.log(user);
 	}
 
 	handleClose = (e) => {
-		this.store.showLogin = false;
+		this.props.closeView();
 	}
 
 	render() {
+		const { isLogining } = this.props;
 		return (
 			<div id="Login">
 				<div className="black-bg"></div>
 				<i className="close" onClick={this.handleClose}>X</i>
 				<h1>开眼世界</h1>
 				<p>登录优即可评论即同步已收藏的视频</p>
+				{isLogining && <p>i am loading logining</p>}
 				<form>
 					<label><i>♀</i><input type="text" ref="account" placeholder="请输入邮箱或电话" /></label>
 					<label><i>♂</i><input type="password" ref="password" placeholder="请输入密码" /></label>

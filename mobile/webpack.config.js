@@ -33,6 +33,9 @@ module.exports = {
       // { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader",'css?sourceMap') }
     ]
   },
+  devServer: {
+    historyApiFallback: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({
       // filename: 'index.html',
